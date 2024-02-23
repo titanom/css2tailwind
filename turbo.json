@@ -1,0 +1,44 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "//#root:format": {
+      "inputs": [
+        "./*.json",
+        "./*.yaml",
+        "!pnpm-lock.yaml",
+        "./*.cjs",
+        "./*.md",
+        "./.github/**/*.yml",
+        "./.vscode/**/*.json"
+      ],
+      "outputs": [
+        "./*.json",
+        "./*.yaml",
+        "!pnpm-lock.yaml",
+        "./*.cjs",
+        "./*.md",
+        "./.github/**/*.yml",
+        "./.vscode/**/*.json"
+      ]
+    },
+    "//#root:format:check": {
+      "inputs": [
+        "./*.json",
+        "./*.yaml",
+        "!pnpm-lock.yaml",
+        "./*.cjs",
+        "./*.md",
+        "./.github/**/*.yml",
+        "./.vscode/**/*.json"
+      ]
+    },
+    "format": {
+      "inputs": ["**/*.{ts,tsx,js,cjs,mjs,json,md}"],
+      "outputs": ["**/*.{ts,tsx,js,cjs,mjs,json,md}"]
+    },
+    "format:check": {
+      "inputs": ["**/*.{ts,tsx,js,cjs,mjs,json,md}"],
+      "outputs": []
+    }
+  }
+}
