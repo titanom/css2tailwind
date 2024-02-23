@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "twp",
+  "private": true,
+  "scripts": {
+    "format": "turbo format root:format",
+    "format:check": "turbo format:check root:format:check",
+    "root:format": "prettier --write ./*.* ./.github ./.vscode",
+    "root:format:check": "prettier --check ./*.* ./.github ./.vscode"
+  },
+  "devDependencies": {
+    "@titanom/prettier-config": "2.0.0",
+    "@titanom/tsconfig": "0.2.0",
+    "prettier": "3.2.5",
+    "turbo": "1.12.4",
+    "typescript": "5.3.3"
+  }
+}
