@@ -47,6 +47,12 @@
     "lint:fix": {
       "inputs": ["src/**", "eslint.config.js"],
       "outputs": ["src/**"]
+    },
+    "topo": { "dependsOn": ["^topo"] },
+    "types": {
+      "inputs": ["src/**", "tsconfig.json"],
+      "outputs": ["./**/*.tsbuildinfo"],
+      "dependsOn": ["topo"]
     }
   }
 }
