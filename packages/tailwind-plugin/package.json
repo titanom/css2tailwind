@@ -4,6 +4,8 @@
   "version": "0.1.0",
   "scripts": {
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix src"
   }
 }

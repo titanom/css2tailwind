@@ -6,11 +6,16 @@
     "format": "turbo format root:format",
     "format:check": "turbo format:check root:format:check",
     "root:format": "prettier --write ./*.* ./.github ./.vscode",
-    "root:format:check": "prettier --check ./*.* ./.github ./.vscode"
+    "root:format:check": "prettier --check ./*.* ./.github ./.vscode",
+    "lint": "turbo lint",
+    "lint:fix": "turbo lint:fix"
   },
   "devDependencies": {
+    "@titanom/eslint-config": "1.2.0",
     "@titanom/prettier-config": "2.0.0",
     "@titanom/tsconfig": "0.2.0",
+    "eslint": "8.57.0",
+    "eslint-plugin-tailwindcss": "3.14.3",
     "prettier": "3.2.5",
     "turbo": "1.12.4",
     "typescript": "5.3.3"

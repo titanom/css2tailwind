@@ -39,6 +39,14 @@
     "format:check": {
       "inputs": ["**/*.{ts,tsx,js,cjs,mjs,json,md}"],
       "outputs": []
+    },
+    "lint": {
+      "inputs": ["src/**", "eslint.config.js"],
+      "outputs": []
+    },
+    "lint:fix": {
+      "inputs": ["src/**", "eslint.config.js"],
+      "outputs": ["src/**"]
     }
   }
 }
