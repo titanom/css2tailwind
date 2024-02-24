@@ -5,6 +5,7 @@ import type { Config } from 'tailwindcss';
 const config = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   plugins: [require(require.resolve('@twp/tailwind-plugin'))],
+  pluginGenerator: { stylesDirectory: 'styles' },
 } satisfies Config & PluginConfig;
 
 export default config;
