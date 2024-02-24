@@ -4,7 +4,8 @@
   "compilerOptions": {
     "moduleResolution": "Bundler",
     "module": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ES2015"]
+    "lib": ["DOM", "DOM.Iterable", "ES2015"],
+    "allowSyntheticDefaultImports": true
   },
   "include": ["**/*.ts"],
   "exclude": ["node_modules"]

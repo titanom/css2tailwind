@@ -3,6 +3,7 @@
   "name": "twp",
   "private": true,
   "scripts": {
+    "dev": "turbo dev",
     "format": "turbo format root:format",
     "format:check": "turbo format:check root:format:check",
     "root:format": "prettier --write ./*.* ./.github ./.vscode",
