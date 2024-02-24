@@ -13,7 +13,7 @@ export async function readStyles(dir: string): Promise<string[]> {
 
 export async function parseStyles(dir: string): Promise<CssInJs> {
   const contents = await readStyles(dir);
-  const compiledStyles = await Promise.all(contents.map(async (raw) => compileStyleSheet(raw)));
+  const compiledStyles = await Promise.all(contents.map(compileStyleSheet));
 
   return compiledStyles.reduce((kind, style) => {
     return { ...kind, ...style };

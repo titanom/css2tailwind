@@ -4,7 +4,11 @@
   "version": "0.1.0",
   "type": "module",
   "main": "./src/index.ts",
+  "bin": {
+    "tgp": "./src/bin.cjs"
+  },
   "scripts": {
+    "build": "tsup",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint src",
@@ -16,10 +20,13 @@
     "postcss": "8.4.35",
     "postcss-js": "4.0.1",
     "tailwindcss": "3.4.1",
+    "yargs": "17.7.2",
     "zod": "3.22.4"
   },
   "devDependencies": {
     "@types/node": "20.11.20",
-    "@types/postcss-js": "4.0.4"
+    "@types/postcss-js": "4.0.4",
+    "@types/yargs": "17.0.32",
+    "tsup": "8.0.2"
   }
 }

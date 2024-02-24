@@ -1,5 +1,5 @@
 {
-  "name": "@twp/demo",
+  "name": "@tgp/demo",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,7 +9,8 @@
     "format:check": "prettier --check .",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",
-    "types": "tsc"
+    "types": "tsc",
+    "tgp": "tgp"
   },
   "dependencies": {
     "react": "18.2.0",
