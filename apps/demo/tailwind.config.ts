@@ -1,4 +1,4 @@
-import type { Config as PluginConfig } from '@twp/tailwind-plugin';
+import type { Config as PluginConfig } from '@tgp/tailwind-generator-plugin';
 
 import type { Config } from 'tailwindcss';
 

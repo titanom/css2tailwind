@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "@twp/tailwind-plugin",
+  "name": "@tgp/tailwind-generator-plugin",
   "version": "0.1.0",
   "type": "module",
   "main": "./src/index.ts",
