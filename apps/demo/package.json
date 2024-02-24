@@ -6,7 +6,10 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix src",
+    "types": "tsc"
   },
   "dependencies": {
     "react": "18.2.0",

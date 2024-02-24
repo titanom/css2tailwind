@@ -1,9 +1,10 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig.json",
-  "extends": "@llc/tsconfig/node.json",
+  "extends": "@titanom/tsconfig/node.json",
   "compilerOptions": {
     "moduleResolution": "Bundler",
-    "module": "ESNext"
+    "module": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ES2015"]
   },
   "include": ["**/*.ts"],
   "exclude": ["node_modules"]
