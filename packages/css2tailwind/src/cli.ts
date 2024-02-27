@@ -28,6 +28,12 @@ const { argv } = yargs(hideBin(process.argv))
     type: 'boolean',
     default: false,
   })
+  .option('config', {
+    alias: 'c',
+    describe: 'Path to the tailwind configuration file',
+    type: 'string',
+    default: 'tailwind.config.ts',
+  })
   .help()
   .alias('help', 'h');
 
@@ -35,12 +41,14 @@ const schema = z.object({
   stylesDirectory: z.string(),
   outputDirectory: z.string(),
   watch: z.boolean(),
+  config: z.string(),
 });
 const args = schema.parse(argv);
 
 const cwd = process.cwd();
 const stylesDirectory = path.join(cwd, args.stylesDirectory);
 const outputDirectory = path.join(cwd, args.outputDirectory);
+const configPath = args.config ? path.join(cwd, args.config) : undefined;
 
 async function assertDirExists(dir: string) {
   try {
@@ -58,7 +66,7 @@ async function main() {
 
   await Promise.all(
     entries.map(async (entry) => {
-      const styles = await parseStyles(path.join(stylesDirectory, entry));
+      const styles = await parseStyles(path.join(stylesDirectory, entry), configPath);
       await writeStyles(outputDirectory, entry, styles);
     }),
   );
@@ -72,7 +80,7 @@ async function main() {
     });
     watcher.on('change', () => {
       void (async () => {
-        const styles = await parseStyles(path.join(stylesDirectory, entry));
+        const styles = await parseStyles(path.join(stylesDirectory, entry), configPath);
         await writeStyles(outputDirectory, entry, styles);
       })();
     });

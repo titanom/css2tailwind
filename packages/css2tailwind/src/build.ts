@@ -11,9 +11,11 @@ export async function readStyles(dir: string): Promise<string[]> {
   return Promise.all(files.map(async (file) => await fsp.readFile(file, 'utf8')));
 }
 
-export async function parseStyles(dir: string): Promise<CssInJs> {
+export async function parseStyles(dir: string, tailwindConfigPath?: string): Promise<CssInJs> {
   const contents = await readStyles(dir);
-  const compiledStyles = await Promise.all(contents.map(compileStyleSheet));
+  const compiledStyles = await Promise.all(
+    contents.map(async (raw) => await compileStyleSheet(raw, tailwindConfigPath)),
+  );
 
   return compiledStyles.reduce((kind, style) => {
     return { ...kind, ...style };
