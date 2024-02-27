@@ -8,6 +8,7 @@ import tailwindPlugin from 'tailwindcss';
 
 const defaultTailwindConfig: Config = { content: ['./**/*.css'] };
 
+// TODO: logging, error handling
 async function readTailwindConfig(path?: string): Promise<Config> {
   if (!path) return defaultTailwindConfig;
   const bundle = await bundleRequire({

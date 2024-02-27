@@ -26,3 +26,8 @@ export async function writeStyles(dir: string, entry: string, style: CssInJs) {
   await fsp.mkdir(dir, { recursive: true });
   return fsp.writeFile(path.join(dir, `${entry}.json`), JSON.stringify(style));
 }
+
+export async function bootstrapStyles(dir: string, entry: string) {
+  await fsp.mkdir(dir, { recursive: true });
+  return fsp.writeFile(path.join(dir, `${entry}.json`), '{}');
+}

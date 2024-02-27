@@ -6,7 +6,7 @@ import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { z } from 'zod';
 
-import { parseStyles, writeStyles } from './build';
+import { bootstrapStyles, parseStyles, writeStyles } from './build';
 import { NoStylesDirectory } from './error';
 
 const { argv } = yargs(hideBin(process.argv))
@@ -66,6 +66,7 @@ async function main() {
 
   await Promise.all(
     entries.map(async (entry) => {
+      await bootstrapStyles(outputDirectory, entry);
       const styles = await parseStyles(path.join(stylesDirectory, entry), configPath);
       await writeStyles(outputDirectory, entry, styles);
     }),
@@ -80,6 +81,7 @@ async function main() {
     });
     watcher.on('change', () => {
       void (async () => {
+        await bootstrapStyles(outputDirectory, entry);
         const styles = await parseStyles(path.join(stylesDirectory, entry), configPath);
         await writeStyles(outputDirectory, entry, styles);
       })();
