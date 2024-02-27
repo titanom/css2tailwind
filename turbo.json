@@ -57,6 +57,8 @@
       "inputs": ["src/**", "tsconfig.json"],
       "outputs": ["./**/*.tsbuildinfo"],
       "dependsOn": ["topo"]
-    }
+    },
+    "build": { "inputs": ["./src/**/*.{ts,tsx}", "./*.ts"], "outputs": ["./dist/**/*"] },
+    "styles:build": {}
   }
 }

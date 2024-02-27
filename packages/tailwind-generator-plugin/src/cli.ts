@@ -37,14 +37,11 @@ const schema = z.object({
   outputDirectory: z.string(),
   watch: z.boolean(),
 });
-console.debug({ argv });
 const args = schema.parse(argv);
 
 const cwd = process.cwd();
 const stylesDirectory = path.join(cwd, args.stylesDirectory);
 const outputDirectory = path.join(cwd, args.outputDirectory);
-
-console.debug({ cwd });
 
 async function assertDirExists(dir: string) {
   try {
@@ -64,12 +61,13 @@ async function main() {
     }),
   );
 
+  if (!args.watch) process.exit(0);
+
   for (const kind of kinds) {
     const kindPath = path.join(stylesDirectory, kind);
     const watcher = watch(`${kindPath}/*/*.css`, {
       awaitWriteFinish: { stabilityThreshold: 10, pollInterval: 10 },
     });
-    console.debug(`${kindPath}/*/*.css`);
     watcher.on('change', () => {
       void (async () => {
         const styles = await parseStyles(path.join(stylesDirectory, kind));

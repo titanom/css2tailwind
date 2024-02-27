@@ -1,0 +1,17 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "extends": ["//"],
+  "pipeline": {
+    "styles:build": {
+      "inputs": ["src/styles/**/*.css"],
+      "outputs": [".styles/**/*.json"],
+      "dependsOn": ["@tgp/tailwind-generator-plugin#build"]
+    },
+    "topo": { "dependsOn": ["^topo"] },
+    "types": {
+      "inputs": ["src/**", "tsconfig.json"],
+      "outputs": ["./**/*.tsbuildinfo"],
+      "dependsOn": ["topo", "styles:build"]
+    }
+  }
+}
