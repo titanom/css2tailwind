@@ -61,6 +61,6 @@
     "build": { "inputs": ["./src/**/*.{ts,tsx}", "./*.ts"], "outputs": ["./dist/**/*"] },
     "styles:build": {},
     "release:dry": { "cache": false },
-    "release:public": { "cache": false }
+    "release:ci": { "cache": false }
   }
 }

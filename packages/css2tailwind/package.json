@@ -1,11 +1,20 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
   "name": "@titanom/css2tailwind",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "bin": {
     "css2tailwind": "./src/bin.cjs"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:titanom/css2tailwind.git"
+  },
+  "bugs": {
+    "url": "https://github.com/titanom/css2tailwind/issues"
+  },
+  "homepage": "https://github.com/titanom/eslint-config#readme",
+  "author": "Jannis Morgenstern <jannis.n.morgenstern@gmail.com> (https://github.com/Jannis-Morgenstern)",
   "scripts": {
     "build": "tsup",
     "format": "prettier --write .",
@@ -14,7 +23,7 @@
     "lint:fix": "eslint --fix src",
     "types": "tsc",
     "release:dry": "pnpm build && pnpm publish --dry-run --no-git-checks",
-    "release:ci": "pnpm build && pnpm publish --access public --provenence"
+    "release:ci": "pnpm build && pnpm publish --access public --provenance"
   },
   "dependencies": {
     "postcss": "8.4.35",
