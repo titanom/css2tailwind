@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
   "name": "@titanom/css2tailwind",
-  "version": "0.1.0",
+  "version": "0.1.0-alpha.1",
   "type": "module",
   "bin": {
     "css2tailwind": "./src/bin.cjs"
@@ -15,7 +15,6 @@
     "types": "tsc"
   },
   "dependencies": {
-    "autoprefixer": "10.4.17",
     "postcss": "8.4.35",
     "postcss-js": "4.0.1",
     "tailwindcss": "3.4.1",
