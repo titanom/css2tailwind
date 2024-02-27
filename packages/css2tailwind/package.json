@@ -26,6 +26,7 @@
     "release:ci": "pnpm build && pnpm publish --access public --provenance"
   },
   "dependencies": {
+    "bundle-require": "4.0.2",
     "postcss": "8.4.35",
     "postcss-js": "4.0.1",
     "tailwindcss": "3.4.1",
