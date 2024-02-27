@@ -11,6 +11,7 @@ pnpm add -D @titanom/css2tailwind
 ## Setup
 
 Add following scripts to your `package.json`.
+
 ```json
 {
   "scripts": {
@@ -21,6 +22,7 @@ Add following scripts to your `package.json`.
 ```
 
 Edit your `tailwind.config.ts`.
+
 ```typescript
 import plugin from 'tailwindcss/plugin.js';
 
@@ -46,11 +48,13 @@ export default config;
 ```
 
 Edit your `.gitignore`.
+
 ```.gitignore
 .styles
 ```
 
 Start adding your styles.
+
 ```css
 /* src/styles/components/button/button.css */
 .button {
