@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "turbo dev",
+    "build": "turbo build",
     "format": "turbo format root:format",
     "format:check": "turbo format:check root:format:check",
     "root:format": "prettier --write ./*.* ./.github ./.vscode",

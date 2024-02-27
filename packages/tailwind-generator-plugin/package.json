@@ -3,7 +3,6 @@
   "name": "@tgp/tailwind-generator-plugin",
   "version": "0.1.0",
   "type": "module",
-  "main": "./src/index.ts",
   "bin": {
     "tgp": "./src/bin.cjs"
   },
@@ -27,6 +26,7 @@
     "@types/node": "20.11.20",
     "@types/postcss-js": "4.0.4",
     "@types/yargs": "17.0.32",
+    "chokidar": "3.6.0",
     "tsup": "8.0.2"
   }
 }

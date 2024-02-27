@@ -1,11 +1,16 @@
-import type { Config as PluginConfig } from '@tgp/tailwind-generator-plugin';
+import plugin from 'tailwindcss/plugin';
+
+import components from './.styles/components.json';
 
 import type { Config } from 'tailwindcss';
 
 const config = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
-  plugins: [require(require.resolve('@tgp/tailwind-generator-plugin'))],
-  pluginGenerator: { stylesDirectory: 'styles' },
-} satisfies Config & PluginConfig;
+  plugins: [
+    plugin(({ addComponents }) => {
+      addComponents(components);
+    }),
+  ],
+} satisfies Config;
 
 export default config;

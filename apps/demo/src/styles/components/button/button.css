@@ -1,0 +1,21 @@
+.button {
+  color: black;
+
+  @apply bg-red-400;
+
+  &-primary {
+    @apply bg-green-500;
+  }
+
+  &-secondary {
+    @apply bg-blue-400;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
+}
