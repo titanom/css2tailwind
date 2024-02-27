@@ -1,0 +1,29 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  id-token: write
+  contents: write
+  pull-requests: write
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: titanom/github-composite-actions/turbo/setup@v1.0.12
+        with:
+          pnpm-version: 8
+
+      - name: Create Release Pull Request
+        uses: changesets/action@v1
+        with:
+          publish: pnpm release:public
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,6 +1,7 @@
 {
   "name": "@css2tw/example-standalone",
   "type": "module",
+  "private": true,
   "scripts": {
     "dev": "run-p vite styles:watch",
     "vite": "vite",
