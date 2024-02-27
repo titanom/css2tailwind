@@ -5,7 +5,7 @@
     "styles:build": {
       "inputs": ["src/styles/**/*.css"],
       "outputs": [".styles/**/*.json"],
-      "dependsOn": ["@tgp/tailwind-generator-plugin#build"]
+      "dependsOn": ["@titanom/css2tailwind#build"]
     },
     "topo": { "dependsOn": ["^topo"] },
     "types": {

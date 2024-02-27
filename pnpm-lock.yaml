@@ -33,7 +33,7 @@ importers:
         specifier: 5.3.3
         version: 5.3.3
 
-  apps/demo:
+  examples/standalone:
     dependencies:
       react:
         specifier: 18.2.0
@@ -42,9 +42,9 @@ importers:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
     devDependencies:
-      '@tgp/tailwind-generator-plugin':
+      '@titanom/css2tailwind':
         specifier: workspace:*
-        version: link:../../packages/tailwind-generator-plugin
+        version: link:../../packages/css2tailwind
       '@types/react':
         specifier: 18.2.56
         version: 18.2.56
@@ -70,7 +70,7 @@ importers:
         specifier: 5.1.4
         version: 5.1.4
 
-  packages/tailwind-generator-plugin:
+  packages/css2tailwind:
     dependencies:
       autoprefixer:
         specifier: 10.4.17

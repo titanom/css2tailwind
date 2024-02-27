@@ -1,1 +1,1 @@
-# @titanom/tailwind-generator-plugin
+# @titanom/css2tailwind
