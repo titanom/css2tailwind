@@ -1,5 +1,11 @@
 # @titanom/css2tailwind
 
+## 0.1.3
+
+### Patch Changes
+
+- [#15](https://github.com/titanom/css2tailwind/pull/15) [`04670a7`](https://github.com/titanom/css2tailwind/commit/04670a74e410459f95623b1e83524bad59947e93) Thanks [@nyarthan](https://github.com/nyarthan)! - resolve `@import` directives to allow references to plugin classes
+
 ## 0.1.2
 
 ### Patch Changes
