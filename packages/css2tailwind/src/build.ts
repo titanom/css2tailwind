@@ -4,7 +4,6 @@ import * as path from 'node:path';
 import type { CssInJs } from 'postcss-js';
 
 import { compileStyleSheet } from './compiler';
-import type { Kind } from './util';
 
 export async function readStyles(dir: string): Promise<string[]> {
   const entries = await fsp.readdir(dir);
@@ -21,7 +20,7 @@ export async function parseStyles(dir: string): Promise<CssInJs> {
   }, {});
 }
 
-export async function writeStyles(dir: string, kind: Kind, style: CssInJs) {
+export async function writeStyles(dir: string, entry: string, style: CssInJs) {
   await fsp.mkdir(dir, { recursive: true });
-  return fsp.writeFile(path.join(dir, `${kind}.json`), JSON.stringify(style));
+  return fsp.writeFile(path.join(dir, `${entry}.json`), JSON.stringify(style));
 }
