@@ -1,4 +1,7 @@
+import * as path from 'node:path';
+
 import { bundleRequire } from 'bundle-require';
+import importPlugin from 'postcss-import';
 import postcssJs, { type CssInJs } from 'postcss-js';
 import nestingPlugin from 'tailwindcss/nesting';
 
@@ -21,13 +24,22 @@ async function readTailwindConfig(path?: string): Promise<Config> {
   return config;
 }
 
+function resolveImport(stylesDirectory: string): (id: string) => string {
+  return (id: string): string => {
+    const [kind, entry] = id.split('/') as [string, string];
+    return path.join(stylesDirectory, kind, entry, `${entry}.css`);
+  };
+}
+
 export async function compileStyleSheet(
   raw: string,
+  stylesDirectory: string,
   tailwindConfigPath?: string,
 ): Promise<CssInJs> {
   const ast = postcss.parse(raw);
 
   const processedAst = await postcss([
+    importPlugin({ resolve: resolveImport(stylesDirectory) }),
     nestingPlugin(),
     tailwindPlugin(await readTailwindConfig(tailwindConfigPath)),
   ]).process(ast, {
