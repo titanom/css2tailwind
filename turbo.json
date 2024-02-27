@@ -59,6 +59,8 @@
       "dependsOn": ["topo"]
     },
     "build": { "inputs": ["./src/**/*.{ts,tsx}", "./*.ts"], "outputs": ["./dist/**/*"] },
-    "styles:build": {}
+    "styles:build": {},
+    "release:dry": { "cache": false },
+    "release:public": { "cache": false }
   }
 }

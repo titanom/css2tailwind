@@ -12,10 +12,11 @@
     "format:check": "prettier --check .",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",
-    "types": "tsc"
+    "types": "tsc",
+    "release:dry": "pnpm build && pnpm publish --dry-run --no-git-checks",
+    "release:ci": "pnpm build && pnpm publish --access public --provenence"
   },
   "dependencies": {
-    "autoprefixer": "10.4.17",
     "postcss": "8.4.35",
     "postcss-js": "4.0.1",
     "tailwindcss": "3.4.1",

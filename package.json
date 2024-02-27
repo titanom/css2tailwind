@@ -11,9 +11,13 @@
     "root:format:check": "prettier --check ./*.* ./.github ./.vscode",
     "lint": "turbo lint",
     "lint:fix": "turbo lint:fix",
-    "types": "turbo types"
+    "types": "turbo types",
+    "release:dry": "turbo --filter @titanom/css2tailwind release:dry",
+    "release:ci": "turbo --filter @titanom/css2tailwind release:ci"
   },
   "devDependencies": {
+    "@changesets/changelog-github": "0.5.0",
+    "@changesets/cli": "2.27.1",
     "@titanom/eslint-config": "1.2.0",
     "@titanom/prettier-config": "2.0.0",
     "@titanom/tsconfig": "0.2.0",
