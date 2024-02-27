@@ -8,7 +8,6 @@ import { z } from 'zod';
 
 import { parseStyles, writeStyles } from './build';
 import { NoStylesDirectory } from './error';
-import { kinds } from './util';
 
 const { argv } = yargs(hideBin(process.argv))
   .usage('tgp <styles-directory> <output-directory>')
@@ -54,24 +53,27 @@ async function assertDirExists(dir: string) {
 async function main() {
   await assertDirExists(stylesDirectory);
 
+  const dirents = await fsp.readdir(stylesDirectory, { withFileTypes: true });
+  const entries = dirents.filter((dirent) => dirent.isDirectory()).map((dirent) => dirent.name);
+
   await Promise.all(
-    kinds.map(async (kind) => {
-      const styles = await parseStyles(path.join(stylesDirectory, kind));
-      await writeStyles(outputDirectory, kind, styles);
+    entries.map(async (entry) => {
+      const styles = await parseStyles(path.join(stylesDirectory, entry));
+      await writeStyles(outputDirectory, entry, styles);
     }),
   );
 
   if (!args.watch) process.exit(0);
 
-  for (const kind of kinds) {
-    const kindPath = path.join(stylesDirectory, kind);
-    const watcher = watch(`${kindPath}/*/*.css`, {
+  for (const entry of entries) {
+    const entryPath = path.join(stylesDirectory, entry);
+    const watcher = watch(`${entryPath}/*/*.css`, {
       awaitWriteFinish: { stabilityThreshold: 10, pollInterval: 10 },
     });
     watcher.on('change', () => {
       void (async () => {
-        const styles = await parseStyles(path.join(stylesDirectory, kind));
-        await writeStyles(outputDirectory, kind, styles);
+        const styles = await parseStyles(path.join(stylesDirectory, entry));
+        await writeStyles(outputDirectory, entry, styles);
       })();
     });
   }
