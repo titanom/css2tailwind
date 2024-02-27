@@ -1,5 +1,5 @@
 {
-  "name": "@tgp/demo",
+  "name": "@css2tw/example-standalone",
   "type": "module",
   "scripts": {
     "dev": "run-p vite styles:watch",
@@ -11,15 +11,15 @@
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",
     "types": "tsc",
-    "styles:build": "tgp src/styles .styles",
-    "styles:watch": "pnpm styles --watch"
+    "styles:build": "css2tailwind src/styles .styles",
+    "styles:watch": "css2tailwind src/styles .styles --watch"
   },
   "dependencies": {
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "@tgp/tailwind-generator-plugin": "workspace:*",
+    "@titanom/css2tailwind": "workspace:*",
     "@types/react": "18.2.56",
     "@types/react-dom": "18.2.19",
     "@vitejs/plugin-react-swc": "3.5.0",

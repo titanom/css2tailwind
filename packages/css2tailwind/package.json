@@ -1,10 +1,10 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "@tgp/tailwind-generator-plugin",
+  "name": "@titanom/css2tailwind",
   "version": "0.1.0",
   "type": "module",
   "bin": {
-    "tgp": "./src/bin.cjs"
+    "css2tailwind": "./src/bin.cjs"
   },
   "scripts": {
     "build": "tsup",
