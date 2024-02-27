@@ -12,8 +12,8 @@
     "lint": "turbo lint",
     "lint:fix": "turbo lint:fix",
     "types": "turbo types",
-    "release": "pnpm build && pnpm publish --dry-run",
-    "release:ci": "pnpm build && pnpm publish --dry-run --provenance"
+    "release:dry": "turbo --filter @titanom/css2tailwind release:dry",
+    "release:ci": "turbo --filter @titanom/css2tailwind release:ci"
   },
   "devDependencies": {
     "@changesets/cli": "2.27.1",
