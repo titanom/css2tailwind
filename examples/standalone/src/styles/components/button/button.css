@@ -1,3 +1,5 @@
+@import "utilities/filter";
+
 .button {
   color: black;
 
@@ -18,4 +20,6 @@
   &:active {
     transform: scale(0.9);
   }
+
+  @apply filter-custom;
 }

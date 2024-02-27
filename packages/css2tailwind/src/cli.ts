@@ -67,7 +67,11 @@ async function main() {
   await Promise.all(
     entries.map(async (entry) => {
       await bootstrapStyles(outputDirectory, entry);
-      const styles = await parseStyles(path.join(stylesDirectory, entry), configPath);
+      const styles = await parseStyles(
+        path.join(stylesDirectory, entry),
+        stylesDirectory,
+        configPath,
+      );
       await writeStyles(outputDirectory, entry, styles);
     }),
   );
@@ -82,7 +86,11 @@ async function main() {
     watcher.on('change', () => {
       void (async () => {
         await bootstrapStyles(outputDirectory, entry);
-        const styles = await parseStyles(path.join(stylesDirectory, entry), configPath);
+        const styles = await parseStyles(
+          path.join(stylesDirectory, entry),
+          stylesDirectory,
+          configPath,
+        );
         await writeStyles(outputDirectory, entry, styles);
       })();
     });
