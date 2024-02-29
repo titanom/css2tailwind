@@ -28,6 +28,8 @@
   },
   "dependencies": {
     "bundle-require": "4.0.2",
+    "chalk": "5.3.0",
+    "colorette": "2.0.20",
     "postcss": "8.4.35",
     "postcss-import": "16.0.1",
     "postcss-js": "4.0.1",

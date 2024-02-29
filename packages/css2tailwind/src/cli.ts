@@ -7,7 +7,8 @@ import { hideBin } from 'yargs/helpers';
 import { z } from 'zod';
 
 import { bootstrapStyles, parseStyles, writeStyles } from './build';
-import { NoStylesDirectory } from './error';
+import { NoStylesDirectoryError } from './error';
+import { readTailwindConfig } from './util';
 
 const { argv } = yargs(hideBin(process.argv))
   .usage('tgp <styles-directory> <output-directory>')
@@ -48,18 +49,19 @@ const args = schema.parse(argv);
 const cwd = process.cwd();
 const stylesDirectory = path.join(cwd, args.stylesDirectory);
 const outputDirectory = path.join(cwd, args.outputDirectory);
-const configPath = args.config ? path.join(cwd, args.config) : undefined;
 
 async function assertDirExists(dir: string) {
   try {
     await fsp.stat(dir);
   } catch (error) {
-    throw new NoStylesDirectory(`Styles Directory ${stylesDirectory} does not exist.`);
+    throw new NoStylesDirectoryError(`Styles Directory ${stylesDirectory} does not exist.`);
   }
 }
 
 async function main() {
   await assertDirExists(stylesDirectory);
+
+  const tailwindConfig = await readTailwindConfig(args.config && path.join(cwd, args.config));
 
   const dirents = await fsp.readdir(stylesDirectory, { withFileTypes: true });
   const entries = dirents.filter((dirent) => dirent.isDirectory()).map((dirent) => dirent.name);
@@ -70,7 +72,7 @@ async function main() {
       const styles = await parseStyles(
         path.join(stylesDirectory, entry),
         stylesDirectory,
-        configPath,
+        tailwindConfig,
       );
       await writeStyles(outputDirectory, entry, styles);
     }),
@@ -89,7 +91,7 @@ async function main() {
         const styles = await parseStyles(
           path.join(stylesDirectory, entry),
           stylesDirectory,
-          configPath,
+          tailwindConfig,
         );
         await writeStyles(outputDirectory, entry, styles);
       })();

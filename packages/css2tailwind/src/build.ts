@@ -5,6 +5,8 @@ import type { CssInJs } from 'postcss-js';
 
 import { compileStyleSheet } from './compiler';
 
+import type { Config } from 'tailwindcss';
+
 export async function readStyles(dir: string): Promise<string[]> {
   const entries = await fsp.readdir(dir);
   const files = entries.map((entry) => path.join(dir, entry, `${entry}.css`));
@@ -14,11 +16,11 @@ export async function readStyles(dir: string): Promise<string[]> {
 export async function parseStyles(
   dir: string,
   stylesDirectory: string,
-  tailwindConfigPath?: string,
+  tailwindConfig: Config,
 ): Promise<CssInJs> {
   const contents = await readStyles(dir);
   const compiledStyles = await Promise.all(
-    contents.map(async (raw) => await compileStyleSheet(raw, stylesDirectory, tailwindConfigPath)),
+    contents.map(async (raw) => await compileStyleSheet(raw, stylesDirectory, tailwindConfig)),
   );
 
   return compiledStyles.reduce((kind, style) => {

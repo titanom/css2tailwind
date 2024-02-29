@@ -12,7 +12,7 @@
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",
     "types": "tsc",
-    "styles:build": "css2tailwind src/styles .styles",
+    "styles:build": "css2tailwind src/styles .styles -c ./blah.js",
     "styles:watch": "css2tailwind src/styles .styles --watch"
   },
   "dependencies": {
