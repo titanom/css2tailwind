@@ -7,8 +7,8 @@ import { hideBin } from 'yargs/helpers';
 import { z } from 'zod';
 
 import { bootstrapStyles, parseStyles, writeStyles } from './build';
-import { NoStylesDirectoryError } from './error';
-import { readTailwindConfig } from './util';
+import { dedupeSyntaxErrors, isSyntaxError, NoStylesDirectoryError, SyntaxError } from './error';
+import { isPromiseRejected, mapPromiseRejectedResultToReason, readTailwindConfig } from './util';
 
 const { argv } = yargs(hideBin(process.argv))
   .usage('tgp <styles-directory> <output-directory>')
@@ -66,17 +66,33 @@ async function main() {
   const dirents = await fsp.readdir(stylesDirectory, { withFileTypes: true });
   const entries = dirents.filter((dirent) => dirent.isDirectory()).map((dirent) => dirent.name);
 
-  await Promise.all(
+  const buildResult = await Promise.allSettled(
     entries.map(async (entry) => {
       await bootstrapStyles(outputDirectory, entry);
-      const styles = await parseStyles(
+      const stylesResult = await parseStyles(
         path.join(stylesDirectory, entry),
         stylesDirectory,
         tailwindConfig,
       );
-      await writeStyles(outputDirectory, entry, styles);
+
+      if (stylesResult.ok) {
+        await writeStyles(outputDirectory, entry, stylesResult.value);
+      } else {
+        // eslint-disable-next-line @typescript-eslint/no-throw-literal
+        throw stylesResult.error;
+      }
     }),
   );
+
+  const buildErrors = buildResult
+    .filter(isPromiseRejected)
+    .flatMap(mapPromiseRejectedResultToReason);
+
+  const syntaxErrors = dedupeSyntaxErrors(buildErrors.filter(isSyntaxError));
+
+  for (const syntaxError of syntaxErrors) {
+    console.log(syntaxError.toString());
+  }
 
   if (!args.watch) process.exit(0);
 
