@@ -106,7 +106,15 @@ async function main() {
     });
     watcher.on('change', () => {
       void (async () => {
-        await doTheThing(entry, tailwindConfig);
+        const buildResult = await doTheThing(entry, tailwindConfig);
+        if (!buildResult.ok) {
+          const error = buildResult.error;
+          if (Array.isArray(error)) {
+            for (const syntaxError of syntaxErrors) {
+              console.log(syntaxError.toString());
+            }
+          }
+        }
       })();
     });
   }

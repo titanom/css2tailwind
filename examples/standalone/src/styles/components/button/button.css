@@ -3,7 +3,7 @@
 .button {
   color: black;
 
-  hwllo there @apply bg-red-400 bg-my-color;
+  @apply bg-red-400 bg-my-color;
 
   &-primary {
     @apply bg-green-500;

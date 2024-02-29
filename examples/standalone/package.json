@@ -3,7 +3,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "run-p vite styles:watch",
+    "dev": "run-p styles:watch vite",
     "vite": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",

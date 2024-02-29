@@ -1,6 +1,5 @@
 @import 'components/button';
 
 .tag {
-  hello there @apply button;
-  yo what the fuck is this shit
+  @apply button;
 }
