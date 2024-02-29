@@ -58,16 +58,16 @@ export function isSyntaxError(error: unknown): error is SyntaxError {
 }
 
 export function dedupeSyntaxErrors(errors: SyntaxError[]) {
-  const blah = new Map<string, SyntaxError>();
+  const uniqueErrors = new Map<string, SyntaxError>();
 
   for (const error of errors) {
     const key = error.key();
     // if an error has a file path, prefer it over the other one(s)
     const hasFile = Boolean(error.error.input?.file ?? error.error.file);
-    if (!blah.has(key) || hasFile) {
-      blah.set(key, error);
+    if (!uniqueErrors.has(key) || hasFile) {
+      uniqueErrors.set(key, error);
     }
   }
 
-  return Array.from(blah.values());
+  return Array.from(uniqueErrors.values());
 }
