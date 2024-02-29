@@ -5,7 +5,7 @@ import type { CssInJs } from 'postcss-js';
 
 import { compileStyleSheet } from './compiler';
 import { isSyntaxError, type SyntaxError } from './error';
-import { err, ok, type Result } from './util';
+import { err, isPromiseFulfilled, mapPromiseFulfilledResultToValue, ok, type Result } from './util';
 
 import type { Config } from 'tailwindcss';
 
@@ -39,10 +39,8 @@ export async function parseStyles(
     }
 
     const values = compiledStyleResults
-      .filter(function (result): result is PromiseFulfilledResult<CssInJs> {
-        return result.status === 'rejected';
-      })
-      .map((result) => result.value);
+      .filter(isPromiseFulfilled)
+      .map(mapPromiseFulfilledResultToValue);
 
     return ok(
       values.reduce((kind, style) => {

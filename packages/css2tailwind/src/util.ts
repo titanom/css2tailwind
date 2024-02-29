@@ -24,15 +24,35 @@ export async function readTailwindConfig(path?: string): Promise<Config> {
   }
 }
 
-export type Result<TValue, TError = Error> =
-  | { ok: true; value: TValue }
-  | { ok: false; error: TError };
+export type ResultOk<TValue> = { ok: true; value: TValue };
+export type ResultErr<TError> = { ok: false; error: TError };
+export type Result<TValue, TError = Error> = ResultOk<TValue> | ResultErr<TError>;
 
 export function ok<TValue>(value: TValue) {
   return { ok: true, value } as const;
 }
 export function err<TError = Error>(error: TError) {
   return { ok: false, error } as const;
+}
+
+export function isOk<TValue, TError>(
+  result: Result<TValue, TError>,
+): result is { ok: true; value: TValue } {
+  return result.ok;
+}
+
+export function isErr<TValue, TError>(
+  result: Result<TValue, TError>,
+): result is { ok: false; error: TError } {
+  return !result.ok;
+}
+
+export function mapOkResultToValue<TValue>(result: ResultOk<TValue>) {
+  return result.value;
+}
+
+export function mapErrResultToError<TError>(result: ResultErr<TError>) {
+  return result.error;
 }
 
 export function isPromiseFulfilled<TValue>(
@@ -51,4 +71,10 @@ export function mapPromiseRejectedResultToReason(
   promiseRejectedResult: PromiseRejectedResult,
 ): unknown {
   return promiseRejectedResult.reason;
+}
+
+export function mapPromiseFulfilledResultToValue<TValue>(
+  promiseRejectedResult: PromiseFulfilledResult<TValue>,
+): TValue {
+  return promiseRejectedResult.value;
 }

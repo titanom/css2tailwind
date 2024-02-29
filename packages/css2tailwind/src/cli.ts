@@ -8,7 +8,20 @@ import { z } from 'zod';
 
 import { bootstrapStyles, parseStyles, writeStyles } from './build';
 import { dedupeSyntaxErrors, isSyntaxError, NoStylesDirectoryError, SyntaxError } from './error';
-import { isPromiseRejected, mapPromiseRejectedResultToReason, readTailwindConfig } from './util';
+import {
+  err,
+  isErr,
+  isPromiseFulfilled,
+  isPromiseRejected,
+  mapErrResultToError,
+  mapPromiseFulfilledResultToValue,
+  mapPromiseRejectedResultToReason,
+  ok,
+  readTailwindConfig,
+  Result,
+} from './util';
+
+import { Config } from 'tailwindcss';
 
 const { argv } = yargs(hideBin(process.argv))
   .usage('tgp <styles-directory> <output-directory>')
@@ -58,6 +71,10 @@ async function assertDirExists(dir: string) {
   }
 }
 
+function exitIf(exit: boolean, code: number) {
+  if (exit) process.exit(code);
+}
+
 async function main() {
   await assertDirExists(stylesDirectory);
 
@@ -66,33 +83,19 @@ async function main() {
   const dirents = await fsp.readdir(stylesDirectory, { withFileTypes: true });
   const entries = dirents.filter((dirent) => dirent.isDirectory()).map((dirent) => dirent.name);
 
-  const buildResult = await Promise.allSettled(
-    entries.map(async (entry) => {
-      await bootstrapStyles(outputDirectory, entry);
-      const stylesResult = await parseStyles(
-        path.join(stylesDirectory, entry),
-        stylesDirectory,
-        tailwindConfig,
-      );
-
-      if (stylesResult.ok) {
-        await writeStyles(outputDirectory, entry, stylesResult.value);
-      } else {
-        // eslint-disable-next-line @typescript-eslint/no-throw-literal
-        throw stylesResult.error;
-      }
-    }),
+  const buildResults = await Promise.all(
+    entries.map(async (entry) => doTheThing(entry, tailwindConfig)),
   );
 
-  const buildErrors = buildResult
-    .filter(isPromiseRejected)
-    .flatMap(mapPromiseRejectedResultToReason);
+  const buildErrors = buildResults.filter(isErr).flatMap(mapErrResultToError);
 
   const syntaxErrors = dedupeSyntaxErrors(buildErrors.filter(isSyntaxError));
 
   for (const syntaxError of syntaxErrors) {
     console.log(syntaxError.toString());
   }
+
+  exitIf(!args.watch && !!buildErrors.length, 1);
 
   if (!args.watch) process.exit(0);
 
@@ -103,16 +106,32 @@ async function main() {
     });
     watcher.on('change', () => {
       void (async () => {
-        await bootstrapStyles(outputDirectory, entry);
-        const styles = await parseStyles(
-          path.join(stylesDirectory, entry),
-          stylesDirectory,
-          tailwindConfig,
-        );
-        await writeStyles(outputDirectory, entry, styles);
+        await doTheThing(entry, tailwindConfig);
       })();
     });
   }
 }
 
 void main();
+
+async function doTheThing(
+  entry: string,
+  tailwindConfig: Config,
+): Promise<Result<void, Error | SyntaxError[]>> {
+  try {
+    await bootstrapStyles(outputDirectory, entry);
+    const stylesResult = await parseStyles(
+      path.join(stylesDirectory, entry),
+      stylesDirectory,
+      tailwindConfig,
+    );
+
+    if (stylesResult.ok) {
+      await writeStyles(outputDirectory, entry, stylesResult.value);
+      return ok(undefined);
+    }
+    return err(stylesResult.error);
+  } catch (error) {
+    return err(new Error('unknown'));
+  }
+}

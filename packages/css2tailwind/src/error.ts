@@ -44,10 +44,6 @@ ${this.error.showSourceCode()}
 `;
   }
 
-  public static dedupe(...errors: SyntaxError[]) {
-    console.debug(errors.map((error) => error));
-  }
-
   public key() {
     return `${this.error.line}:${this.error.column}:${this.error.reason}`;
   }
