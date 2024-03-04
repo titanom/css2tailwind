@@ -1,5 +1,15 @@
 # @titanom/css2tailwind
 
+## 0.1.4
+
+### Patch Changes
+
+- [#19](https://github.com/titanom/css2tailwind/pull/19) [`0d3f136`](https://github.com/titanom/css2tailwind/commit/0d3f1368a7f67303a69b31a1db49d9aa37987c9e) Thanks [@nyarthan](https://github.com/nyarthan)! - add error handling
+
+- [`83092f4`](https://github.com/titanom/css2tailwind/commit/83092f460ce6b6bde7e3593e1a7b2b192f3f989e) Thanks [@nyarthan](https://github.com/nyarthan)! - create initial documentation
+
+- [`ae13fc0`](https://github.com/titanom/css2tailwind/commit/ae13fc0b77db19e9db2eb5c0c49e2b0f7815568d) Thanks [@nyarthan](https://github.com/nyarthan)! - usage documentation
+
 ## 0.1.3
 
 ### Patch Changes
