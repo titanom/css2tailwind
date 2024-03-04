@@ -107,6 +107,24 @@ This will compile into the following output (formatted):
 { "h1": { "fontWeight": 700 } }
 ```
 
+### Including other Styles
+
+To include styles defined in your custom css files inside other css files, you must use the `@import` directive.
+
+```css
+/* src/styles/utilities/content/content.css */
+.content-auto {
+  content-visibility: auto;
+}
+
+/* src/styles/components/button/button.css */
+@import "utilities/content";
+
+.button {
+  @apply content-auto;
+}
+```
+
 ## Usage
 
 ### CLI
