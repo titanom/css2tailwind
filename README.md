@@ -1,1 +1,1 @@
-# @titanom/css2tailwind
+./css2tailwind/README.md
