@@ -1,0 +1,7 @@
+.content-auto {
+  content-visibility: auto;
+}
+
+.content-hidden {
+  content-visibility: hidden;
+}

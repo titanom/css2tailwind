@@ -53,7 +53,9 @@ Edit your `.gitignore`.
 .styles
 ```
 
-Start adding your styles.
+Start adding your styles.  
+All styles within a directory nested in the `styles-directory` will be compiled into a json file with the same name.  
+It is required to nest individual css files in a directory having the same name. This encourages colocating documentation with the corresponding styles .e.g using [storybook](https://storybook.js.org/).
 
 ```css
 /* src/styles/components/button/button.css */
@@ -62,6 +64,47 @@ Start adding your styles.
     @apply bg-blue-400;
   }
 }
+
+/* src/styles/components/tag/tag.css */
+.tag {
+  @apply p-4;
+}
+
+/* src/styles/utilities/content/content.css */
+.content-auto {
+  content-visibility: auto;
+}
+
+.content-hidden {
+  content-visibility: hidden;
+}
+
+/* src/styles/base/typography/typography.css */
+h1 {
+  @apply font-bold;
+}
+```
+
+This will compile into the following output (formatted):
+
+```jsonc
+// .styles/components.json
+{
+  ".button-primary": {
+    "--tw-bg-opacity": "1",
+    "backgroundColor": "rgb(96 165 250 / var(--tw-bg-opacity))"
+  },
+  ".tag": { "padding": "1rem" }
+}
+
+// .styles/utilities.json
+{
+  ".content-auto": { "contentVisibility": "auto" },
+  ".content-hidden": { "contentVisibility": "hidden" }
+}
+
+// .styles/base.json
+{ "h1": { "fontWeight": 700 } }
 ```
 
 ## Usage
