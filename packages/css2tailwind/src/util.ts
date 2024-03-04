@@ -19,8 +19,7 @@ export async function readTailwindConfig(path?: string): Promise<Config> {
     // TODO: log a warning
     if (Object.keys(config).length <= 0) throw new Error();
     return config;
-  } catch (error) {
-    console.log('--------------------------------------', error);
+  } catch {
     throw new ResolveTailwindConfigError(`Failed to read tailwind configuration at ${path}.`);
   }
 }

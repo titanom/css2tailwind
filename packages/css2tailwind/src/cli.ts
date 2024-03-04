@@ -105,13 +105,15 @@ function gracefullyShutdown() {
 async function main() {
   await assertDirExists(stylesDirectory);
 
-  const tailwindConfig = await readTailwindConfig(args.config && path.join(cwd, args.config));
   const dirents = await fsp.readdir(stylesDirectory, { withFileTypes: true });
   const entries = dirents.filter((dirent) => dirent.isDirectory()).map((dirent) => dirent.name);
 
+  await Promise.all(entries.map(async (entry) => bootstrapStyles(outputDirectory, entry)));
+
+  const tailwindConfig = await readTailwindConfig(args.config && path.join(cwd, args.config));
+
   const buildResults = await Promise.all(
     entries.map(async (entry) => {
-      await bootstrapStyles(outputDirectory, entry);
       return await buildAndHandleErrors(entry, tailwindConfig);
     }),
   );
