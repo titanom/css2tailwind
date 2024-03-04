@@ -4,6 +4,10 @@ import * as path from 'node:path';
 import type { CssInJs } from 'postcss-js';
 
 import { compileStyleSheet } from './compiler';
+import { isSyntaxError, type SyntaxError } from './error';
+import { err, isPromiseFulfilled, mapPromiseFulfilledResultToValue, ok, type Result } from './util';
+
+import type { Config } from 'tailwindcss';
 
 export async function readStyles(dir: string): Promise<string[]> {
   const entries = await fsp.readdir(dir);
@@ -14,16 +18,38 @@ export async function readStyles(dir: string): Promise<string[]> {
 export async function parseStyles(
   dir: string,
   stylesDirectory: string,
-  tailwindConfigPath?: string,
-): Promise<CssInJs> {
+  tailwindConfig: Config,
+): Promise<Result<CssInJs, SyntaxError[] | Error>> {
   const contents = await readStyles(dir);
-  const compiledStyles = await Promise.all(
-    contents.map(async (raw) => await compileStyleSheet(raw, stylesDirectory, tailwindConfigPath)),
-  );
+  try {
+    const compiledStyleResults = await Promise.allSettled(
+      contents.map(async (raw) => await compileStyleSheet(raw, stylesDirectory, tailwindConfig)),
+    );
 
-  return compiledStyles.reduce((kind, style) => {
-    return { ...kind, ...style };
-  }, {});
+    const errors = compiledStyleResults
+      .filter(function (result): result is PromiseRejectedResult {
+        return result.status === 'rejected';
+      })
+      .map((result) => result.reason as unknown);
+
+    if (errors.length) {
+      const syntaxErrors = errors.filter(isSyntaxError);
+
+      return err(syntaxErrors);
+    }
+
+    const values = compiledStyleResults
+      .filter(isPromiseFulfilled)
+      .map(mapPromiseFulfilledResultToValue);
+
+    return ok(
+      values.reduce((kind, style) => {
+        return { ...kind, ...style };
+      }, {}),
+    );
+  } catch (error) {
+    return err(new Error('unknown'));
+  }
 }
 
 export async function writeStyles(dir: string, entry: string, style: CssInJs) {

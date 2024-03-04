@@ -27,7 +27,9 @@
     "release:ci": "pnpm build && pnpm publish --access public --provenance"
   },
   "dependencies": {
+    "@babel/code-frame": "7.23.5",
     "bundle-require": "4.0.2",
+    "colorette": "2.0.20",
     "postcss": "8.4.35",
     "postcss-import": "16.0.1",
     "postcss-js": "4.0.1",
@@ -36,6 +38,7 @@
     "zod": "3.22.4"
   },
   "devDependencies": {
+    "@types/babel__code-frame": "7.0.6",
     "@types/node": "20.11.20",
     "@types/postcss-import": "14.0.3",
     "@types/postcss-js": "4.0.4",
