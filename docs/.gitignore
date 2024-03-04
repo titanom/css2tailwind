@@ -1,2 +1,2 @@
-.vitepress
-!.vitepress/config.mts
+.vitepress/cache
+.vitepress/dist
