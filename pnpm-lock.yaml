@@ -39,44 +39,7 @@ importers:
         specifier: 5.3.3
         version: 5.3.3
 
-  examples/standalone:
-    dependencies:
-      react:
-        specifier: 18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: 18.2.0
-        version: 18.2.0(react@18.2.0)
-    devDependencies:
-      '@titanom/css2tailwind':
-        specifier: workspace:*
-        version: link:../../packages/css2tailwind
-      '@types/react':
-        specifier: 18.2.56
-        version: 18.2.56
-      '@types/react-dom':
-        specifier: 18.2.19
-        version: 18.2.19
-      '@vitejs/plugin-react-swc':
-        specifier: 3.5.0
-        version: 3.5.0(vite@5.1.4)
-      autoprefixer:
-        specifier: 10.4.17
-        version: 10.4.17(postcss@8.4.35)
-      npm-run-all:
-        specifier: 4.1.5
-        version: 4.1.5
-      postcss:
-        specifier: 8.4.35
-        version: 8.4.35
-      tailwindcss:
-        specifier: 3.4.1
-        version: 3.4.1
-      vite:
-        specifier: 5.1.4
-        version: 5.1.4
-
-  packages/css2tailwind:
+  css2tailwind:
     dependencies:
       '@babel/code-frame':
         specifier: 7.23.5
@@ -127,6 +90,43 @@ importers:
       tsup:
         specifier: 8.0.2
         version: 8.0.2(postcss@8.4.35)(typescript@5.3.3)
+
+  examples/standalone:
+    dependencies:
+      react:
+        specifier: 18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: 18.2.0
+        version: 18.2.0(react@18.2.0)
+    devDependencies:
+      '@titanom/css2tailwind':
+        specifier: workspace:*
+        version: link:../../css2tailwind
+      '@types/react':
+        specifier: 18.2.56
+        version: 18.2.56
+      '@types/react-dom':
+        specifier: 18.2.19
+        version: 18.2.19
+      '@vitejs/plugin-react-swc':
+        specifier: 3.5.0
+        version: 3.5.0(vite@5.1.4)
+      autoprefixer:
+        specifier: 10.4.17
+        version: 10.4.17(postcss@8.4.35)
+      npm-run-all:
+        specifier: 4.1.5
+        version: 4.1.5
+      postcss:
+        specifier: 8.4.35
+        version: 8.4.35
+      tailwindcss:
+        specifier: 3.4.1
+        version: 3.4.1
+      vite:
+        specifier: 5.1.4
+        version: 5.1.4
 
 packages:
 

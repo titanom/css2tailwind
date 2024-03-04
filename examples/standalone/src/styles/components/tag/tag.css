@@ -1,5 +1,3 @@
-@import 'components/button';
-
 .tag {
-  @apply button;
+  @apply p-4;
 }
