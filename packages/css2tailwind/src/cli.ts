@@ -1,7 +1,7 @@
 import * as fsp from 'node:fs/promises';
 import * as path from 'node:path';
 
-import { FSWatcher, watch } from 'chokidar';
+import { watch, type FSWatcher } from 'chokidar';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { z } from 'zod';
@@ -110,7 +110,10 @@ async function main() {
   const entries = dirents.filter((dirent) => dirent.isDirectory()).map((dirent) => dirent.name);
 
   const buildResults = await Promise.all(
-    entries.map(async (entry) => buildAndHandleErrors(entry, tailwindConfig)),
+    entries.map(async (entry) => {
+      await bootstrapStyles(outputDirectory, entry);
+      return await buildAndHandleErrors(entry, tailwindConfig);
+    }),
   );
 
   const buildErrors = buildResults.filter(isErr).flatMap(mapErrResultToError);
