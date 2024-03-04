@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "@css2tw/docs",
+  "private": true,
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview",
+    "format": "prettier --write .",
+    "format:check": "prettier --write ."
+  },
+  "dependencies": {
+    "vitepress": "1.0.0-rc.44"
+  }
+}
