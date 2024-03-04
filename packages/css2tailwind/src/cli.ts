@@ -7,21 +7,15 @@ import { hideBin } from 'yargs/helpers';
 import { z } from 'zod';
 
 import { bootstrapStyles, parseStyles, writeStyles } from './build';
-import { dedupeSyntaxErrors, isSyntaxError, NoStylesDirectoryError, SyntaxError } from './error';
 import {
-  err,
-  isErr,
-  isPromiseFulfilled,
-  isPromiseRejected,
-  mapErrResultToError,
-  mapPromiseFulfilledResultToValue,
-  mapPromiseRejectedResultToReason,
-  ok,
-  readTailwindConfig,
-  Result,
-} from './util';
+  dedupeSyntaxErrors,
+  isSyntaxError,
+  NoStylesDirectoryError,
+  type SyntaxError,
+} from './error';
+import { err, isErr, mapErrResultToError, ok, readTailwindConfig, type Result } from './util';
 
-import { Config } from 'tailwindcss';
+import type { Config } from 'tailwindcss';
 
 const { argv } = yargs(hideBin(process.argv))
   .usage('tgp <styles-directory> <output-directory>')
@@ -96,8 +90,7 @@ async function main() {
   }
 
   exitIf(!args.watch && !!buildErrors.length, 1);
-
-  if (!args.watch) process.exit(0);
+  exitIf(!args.watch, 0);
 
   for (const entry of entries) {
     const entryPath = path.join(stylesDirectory, entry);
@@ -107,9 +100,11 @@ async function main() {
     watcher.on('change', () => {
       void (async () => {
         const buildResult = await doTheThing(entry, tailwindConfig);
+
         if (!buildResult.ok) {
           const error = buildResult.error;
           if (Array.isArray(error)) {
+            const syntaxErrors = dedupeSyntaxErrors(error.filter(isSyntaxError));
             for (const syntaxError of syntaxErrors) {
               console.log(syntaxError.toString());
             }
