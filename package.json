@@ -13,7 +13,10 @@
     "lint:fix": "turbo lint:fix",
     "types": "turbo types",
     "release:dry": "turbo --filter @titanom/css2tailwind release:dry",
-    "release:ci": "turbo --filter @titanom/css2tailwind release:ci"
+    "release:ci": "turbo --filter @titanom/css2tailwind release:ci",
+    "docs:dev": "turbo --filter @css2tw/docs dev",
+    "docs:build": "turbo --filter @css2tw/docs build",
+    "docs:preview": "turbo --filter @css2tw/docs preview"
   },
   "devDependencies": {
     "@changesets/changelog-github": "0.5.0",
