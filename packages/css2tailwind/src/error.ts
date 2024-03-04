@@ -8,6 +8,18 @@ export class NoStylesDirectoryError extends Error {
   }
 }
 
+export class CloseWatcherError extends Error {
+  private readonly errorName = 'ERR_CLOSE_WATCHER';
+
+  public constructor(message: string) {
+    super(message);
+  }
+
+  public override toString() {
+    return `${bgRed(` ${black(this.errorName)} `)} Failed to close watcher`;
+  }
+}
+
 export class CompilationError extends Error {
   public constructor(message: string) {
     super(message);

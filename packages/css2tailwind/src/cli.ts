@@ -1,13 +1,14 @@
 import * as fsp from 'node:fs/promises';
 import * as path from 'node:path';
 
-import { watch } from 'chokidar';
+import { FSWatcher, watch } from 'chokidar';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { z } from 'zod';
 
 import { bootstrapStyles, parseStyles, writeStyles } from './build';
 import {
+  CloseWatcherError,
   dedupeSyntaxErrors,
   isSyntaxError,
   NoStylesDirectoryError,
@@ -69,60 +70,70 @@ function exitIf(exit: boolean, code: number) {
   if (exit) process.exit(code);
 }
 
+async function buildAndHandleErrors(entry: string, tailwindConfig: Config) {
+  const buildResult = await compileAndWriteStyles(entry, tailwindConfig);
+  if (!buildResult.ok) handleBuildErrors(buildResult.error);
+  return buildResult;
+}
+
+function handleBuildErrors(error: unknown) {
+  if (Array.isArray(error)) {
+    const syntaxErrors = dedupeSyntaxErrors(error.filter(isSyntaxError));
+    syntaxErrors.forEach((error) => console.log(error.toString()));
+  }
+}
+
+function setupWatcher(entryPath: string, entry: string, tailwindConfig: Config): FSWatcher {
+  const watcher = watch(`${entryPath}/*/*.css`, {
+    awaitWriteFinish: { stabilityThreshold: 10, pollInterval: 10 },
+  });
+  watcher.on('change', () => void buildAndHandleErrors(entry, tailwindConfig));
+  return watcher;
+}
+
+let watchers: FSWatcher[] = [];
+
+function gracefullyShutdown() {
+  Promise.all(watchers.map(async (watcher) => await watcher.close()))
+    .then(() => process.exit(0))
+    .catch(() => {
+      console.error(new CloseWatcherError('').toString());
+      process.exit(1);
+    });
+}
+
 async function main() {
   await assertDirExists(stylesDirectory);
 
   const tailwindConfig = await readTailwindConfig(args.config && path.join(cwd, args.config));
-
   const dirents = await fsp.readdir(stylesDirectory, { withFileTypes: true });
   const entries = dirents.filter((dirent) => dirent.isDirectory()).map((dirent) => dirent.name);
 
   const buildResults = await Promise.all(
-    entries.map(async (entry) => doTheThing(entry, tailwindConfig)),
+    entries.map(async (entry) => buildAndHandleErrors(entry, tailwindConfig)),
   );
 
   const buildErrors = buildResults.filter(isErr).flatMap(mapErrResultToError);
 
-  const syntaxErrors = dedupeSyntaxErrors(buildErrors.filter(isSyntaxError));
-
-  for (const syntaxError of syntaxErrors) {
-    console.log(syntaxError.toString());
-  }
-
-  exitIf(!args.watch && !!buildErrors.length, 1);
+  exitIf(!args.watch && buildErrors.length > 0, 1);
   exitIf(!args.watch, 0);
 
-  for (const entry of entries) {
+  entries.forEach((entry) => {
     const entryPath = path.join(stylesDirectory, entry);
-    const watcher = watch(`${entryPath}/*/*.css`, {
-      awaitWriteFinish: { stabilityThreshold: 10, pollInterval: 10 },
-    });
-    watcher.on('change', () => {
-      void (async () => {
-        const buildResult = await doTheThing(entry, tailwindConfig);
+    setupWatcher(entryPath, entry, tailwindConfig);
+  });
 
-        if (!buildResult.ok) {
-          const error = buildResult.error;
-          if (Array.isArray(error)) {
-            const syntaxErrors = dedupeSyntaxErrors(error.filter(isSyntaxError));
-            for (const syntaxError of syntaxErrors) {
-              console.log(syntaxError.toString());
-            }
-          }
-        }
-      })();
-    });
-  }
+  process.on('SIGINT', gracefullyShutdown);
+  process.on('SIGTERM', gracefullyShutdown);
 }
 
 void main();
 
-async function doTheThing(
+async function compileAndWriteStyles(
   entry: string,
   tailwindConfig: Config,
 ): Promise<Result<void, Error | SyntaxError[]>> {
   try {
-    await bootstrapStyles(outputDirectory, entry);
     const stylesResult = await parseStyles(
       path.join(stylesDirectory, entry),
       stylesDirectory,
