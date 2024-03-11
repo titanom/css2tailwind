@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress';
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: '@titanom/css2tailwind',
+  title: 'css2tailwind',
   description:
     'A tool for compiling css files to CssInJs objects to be used inside tailwindcss plugins.',
   themeConfig: {
@@ -26,9 +26,10 @@ export default defineConfig({
         collapsed: false,
         items: [
           { text: 'File Structure', link: '/guide/file-structure' },
+          { text: 'Nesting', link: '/guide/nesting' },
           { text: 'Including Custom Styles', link: '/guide/including-custom-styles' },
           { text: 'CLI', link: '/guide/cli' },
-          { text: 'Applying Styles', link: '/guide/applying-styles' },
+          { text: 'Monorepo', link: '/guide/monorepo' },
         ],
       },
     ],
