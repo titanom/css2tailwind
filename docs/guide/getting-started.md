@@ -76,6 +76,12 @@ const config = {
 export default config;
 ```
 
+::: tip
+
+The names and existence of the imported `.json` files depends on your [file sturcture](./file-structure) and might not be exactly the same.
+
+:::
+
 Exclude the output directory from source-control.
 
 ```.gitignore

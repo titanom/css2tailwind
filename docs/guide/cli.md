@@ -7,7 +7,7 @@
 #### Usage
 
 ```sh
-css2tailwind <styles-directory> <output-directory> [OPTIONS...]
+$ css2tailwind <styles-directory> <output-directory> [OPTIONS...]
 ```
 
 #### Arguments

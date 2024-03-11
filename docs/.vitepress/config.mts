@@ -22,14 +22,11 @@ export default defineConfig({
         ],
       },
       {
-        text: 'Writing',
-        collapsed: false,
-        items: [{ text: 'File Structure', link: '/guide/file-structure' }],
-      },
-      {
         text: 'Usage',
         collapsed: false,
         items: [
+          { text: 'File Structure', link: '/guide/file-structure' },
+          { text: 'Including Custom Styles', link: '/guide/including-custom-styles' },
           { text: 'CLI', link: '/guide/cli' },
           { text: 'Applying Styles', link: '/guide/applying-styles' },
         ],
