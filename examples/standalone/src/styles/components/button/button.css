@@ -1,5 +1,5 @@
+@import 'utilities/filter';
+
 .button {
-  &-primary {
-    @apply bg-blue-400;
-  }
+  @apply filter-hue-rotate;
 }

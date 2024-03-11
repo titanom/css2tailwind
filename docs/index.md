@@ -3,9 +3,8 @@
 layout: home
 
 hero:
-  name: "@titanom/css2tailwind"
+  name: "css2tailwind"
   text: "A tool for compiling css files to CssInJs objects to be used inside tailwindcss plugins."
-  tagline: My great project tagline
   actions:
     - theme: brand
       text: Get Started

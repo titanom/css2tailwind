@@ -19,32 +19,33 @@ import { err, isErr, mapErrResultToError, ok, readTailwindConfig, type Result } 
 import type { Config } from 'tailwindcss';
 
 const { argv } = yargs(hideBin(process.argv))
-  .usage('tgp <styles-directory> <output-directory>')
+  .usage('css2tailwind <styles-directory> <output-directory>')
   .command('$0 <styles-directory> <output-directory>', 'The main command', (yargs) => {
     yargs
       .positional('styles-directory', {
-        describe: 'path to the source styles directory',
+        describe: 'Path to the source styles directory',
         type: 'string',
       })
       .positional('output-directory', {
-        describe: 'path to the output file',
+        describe: 'Path to the output file',
         type: 'string',
       });
   })
   .option('watch', {
     alias: 'w',
-    describe: 'Watch for file changes',
+    describe: 'Watch for file changes in the styles-directory',
     type: 'boolean',
     default: false,
   })
   .option('config', {
     alias: 'c',
-    describe: 'Path to the tailwind configuration file',
+    describe: 'Path to the tailwind config',
     type: 'string',
     default: 'tailwind.config.ts',
   })
   .help()
-  .alias('help', 'h');
+  .alias('help', 'h')
+  .alias('version', 'v');
 
 const schema = z.object({
   stylesDirectory: z.string(),
