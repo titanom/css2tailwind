@@ -3,6 +3,7 @@
 ## Visual Studio Code
 
 Add following files in the root of your project.
+
 ```jsonc
 // .vscode/extensions.json
 {
