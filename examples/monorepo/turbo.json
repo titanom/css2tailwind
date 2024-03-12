@@ -1,0 +1,55 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "dev": {
+      "persistent": true
+    },
+    "preview": {
+      "persistent": true
+    },
+    "build": {
+      "inputs": ["./src/**/*.{ts,tsx,css}", "./*.ts"],
+      "outputs": ["./dist/**/*", "./styles/**/*"],
+      "dependsOn": ["^build"]
+    },
+    "//#root:format": {
+      "inputs": [
+        "./*.json",
+        "./*.yaml",
+        "!pnpm-lock.yaml",
+        "./*.cjs",
+        "./*.md",
+        "./.github/**/*.yml",
+        "./.vscode/**/*.json"
+      ],
+      "outputs": [
+        "./*.json",
+        "./*.yaml",
+        "!pnpm-lock.yaml",
+        "./*.cjs",
+        "./*.md",
+        "./.github/**/*.yml",
+        "./.vscode/**/*.json"
+      ]
+    },
+    "//#root:format:check": {
+      "inputs": [
+        "./*.json",
+        "./*.yaml",
+        "!pnpm-lock.yaml",
+        "./*.cjs",
+        "./*.md",
+        "./.github/**/*.yml",
+        "./.vscode/**/*.json"
+      ]
+    },
+    "format": {
+      "inputs": ["**/*.{ts,tsx,js,cjs,mjs,json,md,css}"],
+      "outputs": ["**/*.{ts,tsx,js,cjs,mjs,json,md,css}"]
+    },
+    "format:check": {
+      "inputs": ["**/*.{ts,tsx,js,cjs,mjs,json,md,css}"],
+      "outputs": []
+    }
+  }
+}
