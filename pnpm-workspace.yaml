@@ -1,4 +1,3 @@
 packages:
-  - 'examples/*'
   - 'css2tailwind'
   - 'docs'

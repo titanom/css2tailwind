@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "repo",
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "preview": "turbo preview",
+    "format": "turbo root:format format",
+    "format:check": "turbo root:format:check format:check",
+    "root:format": "prettier --write ./*.*",
+    "root:format:check": "prettier --check ./*.*"
+  },
+  "devDependencies": {
+    "turbo": "^1.12.5"
+  }
+}

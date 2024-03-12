@@ -53,3 +53,9 @@ const config = {
 
 export default config;
 ```
+
+::: tip
+
+For a full example see [examples/monorepo](https://github.com/titanom/css2tailwind/tree/master/examples/monorepo).
+
+:::

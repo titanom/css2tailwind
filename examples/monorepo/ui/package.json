@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "@repo/ui",
+  "scripts": {
+    "dev": "css2tailwind src/styles .styles --watch",
+    "build": "css2tailwind src/styles .styles"
+  },
+  "devDependencies": {
+    "@titanom/css2tailwind": "file:../../../css2tailwind",
+    "tailwindcss": "^3.4.1"
+  }
+}

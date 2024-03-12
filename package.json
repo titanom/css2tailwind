@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build",
-    "format": "turbo format root:format",
-    "format:check": "turbo format:check root:format:check",
+    "format": "./scripts/format.sh",
+    "format:check": "./scripts/format-check.sh",
     "root:format": "prettier --write ./*.* ./.github ./.vscode",
     "root:format:check": "prettier --check ./*.* ./.github ./.vscode",
     "lint": "turbo lint",
