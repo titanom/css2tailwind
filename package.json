@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build",
-    "format": "turbo format root:format && pushd examples/standalone && pnpm format && popd && pushd examples/monorepo && pnpm format && popd",
-    "format:check": "turbo format:check root:format:check && pushd examples/standalone && pnpm format:check && popd && pushd examples/monorepo && pnpm format:check && popd",
+    "format": "./scripts/format.sh",
+    "format:check": "./scripts/format-check.sh",
     "root:format": "prettier --write ./*.* ./.github ./.vscode",
     "root:format:check": "prettier --check ./*.* ./.github ./.vscode",
     "lint": "turbo lint",
