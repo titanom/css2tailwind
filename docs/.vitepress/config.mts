@@ -2,6 +2,7 @@ import { defineConfig } from 'vitepress';
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  head: [['link', {rel: 'icon', href: '/favicon.ico'}]],
   title: 'css2tailwind',
   description:
     'A tool for compiling css files to CssInJs objects to be used inside tailwindcss plugins.',
