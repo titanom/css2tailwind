@@ -1,5 +1,15 @@
 # @titanom/css2tailwind
 
+## 0.1.5
+
+### Patch Changes
+
+- [`052ee59`](https://github.com/titanom/css2tailwind/commit/052ee59b11f2b175e41bc5543224840e6cd17714) Thanks [@nyarthan](https://github.com/nyarthan)! - finish docs
+
+- [#28](https://github.com/titanom/css2tailwind/pull/28) [`96dd3e3`](https://github.com/titanom/css2tailwind/commit/96dd3e3d201a4012951b2260feaee6140eb6a7ab) Thanks [@nyarthan](https://github.com/nyarthan)! - handle unresolved css imports
+
+- [#28](https://github.com/titanom/css2tailwind/pull/28) [`96dd3e3`](https://github.com/titanom/css2tailwind/commit/96dd3e3d201a4012951b2260feaee6140eb6a7ab) Thanks [@nyarthan](https://github.com/nyarthan)! - document class naming convention
+
 ## 0.1.4
 
 ### Patch Changes
