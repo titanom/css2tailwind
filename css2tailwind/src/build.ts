@@ -19,11 +19,15 @@ export async function parseStyles(
   dir: string,
   stylesDirectory: string,
   tailwindConfig: Config,
+  exitOnUnresolvedImport: boolean,
 ): Promise<Result<CssInJs, SyntaxError[] | Error>> {
   const contents = await readStyles(dir);
   try {
     const compiledStyleResults = await Promise.allSettled(
-      contents.map(async (raw) => await compileStyleSheet(raw, stylesDirectory, tailwindConfig)),
+      contents.map(
+        async (raw) =>
+          await compileStyleSheet(raw, stylesDirectory, tailwindConfig, exitOnUnresolvedImport),
+      ),
     );
 
     const errors = compiledStyleResults

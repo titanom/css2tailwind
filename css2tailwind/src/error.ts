@@ -2,6 +2,18 @@ import { bgRed, black, red } from 'colorette';
 
 import type { CssSyntaxError } from 'postcss';
 
+export class ResolveImportError extends Error {
+  private readonly errorName = 'ERR_RESOLVE_IMPORT';
+
+  public constructor(message: string) {
+    super(message);
+  }
+
+  public override toString() {
+    return `${bgRed(` ${black(this.errorName)} `)} Failed to resolve import "${this.message}". Imports must be in format "<layer>/<entry>", e.g. "components/button"`;
+  }
+}
+
 export class NoStylesDirectoryError extends Error {
   public constructor(message: string) {
     super(message);
