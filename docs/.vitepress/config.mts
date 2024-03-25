@@ -27,7 +27,7 @@ export default defineConfig({
         collapsed: false,
         items: [
           { text: 'File Structure', link: '/guide/file-structure' },
-          { text: 'Nesting', link: '/guide/nesting' },
+          { text: 'Writing Styles', link: '/guide/writing-styles' },
           { text: 'Including Custom Styles', link: '/guide/including-custom-styles' },
           { text: 'CLI', link: '/guide/cli' },
           { text: 'Monorepo', link: '/guide/monorepo' },

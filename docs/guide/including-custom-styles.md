@@ -27,7 +27,7 @@ src
 ```css
 /* button.css */
 .button {
-  @apply filter-custom;
+  @apply filter-hue-rotate;
 }
 ```
 
@@ -42,7 +42,7 @@ You can fix the error by explicitely importing the entry that defines you custom
 @import "utilities/filter"; // [!code ++]
 
 .button {
-  @apply filter-custom;
+  @apply filter-hue-rotate;
 }
 ```
 
