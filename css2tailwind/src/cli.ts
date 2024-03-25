@@ -71,8 +71,12 @@ function exitIf(exit: boolean, code: number) {
   if (exit) process.exit(code);
 }
 
-async function buildAndHandleErrors(entry: string, tailwindConfig: Config) {
-  const buildResult = await compileAndWriteStyles(entry, tailwindConfig);
+async function buildAndHandleErrors(
+  entry: string,
+  tailwindConfig: Config,
+  exitOnUnresolvedImport: boolean,
+) {
+  const buildResult = await compileAndWriteStyles(entry, tailwindConfig, exitOnUnresolvedImport);
   if (!buildResult.ok) handleBuildErrors(buildResult.error);
   return buildResult;
 }
@@ -88,7 +92,7 @@ function setupWatcher(entryPath: string, entry: string, tailwindConfig: Config):
   const watcher = watch(`${entryPath}/*/*.css`, {
     awaitWriteFinish: { stabilityThreshold: 10, pollInterval: 10 },
   });
-  watcher.on('change', () => void buildAndHandleErrors(entry, tailwindConfig));
+  watcher.on('change', () => void buildAndHandleErrors(entry, tailwindConfig, false));
   return watcher;
 }
 
@@ -115,7 +119,7 @@ async function main() {
 
   const buildResults = await Promise.all(
     entries.map(async (entry) => {
-      return await buildAndHandleErrors(entry, tailwindConfig);
+      return await buildAndHandleErrors(entry, tailwindConfig, true);
     }),
   );
 
@@ -138,12 +142,14 @@ void main();
 async function compileAndWriteStyles(
   entry: string,
   tailwindConfig: Config,
+  exitOnUnresolvedImport: boolean,
 ): Promise<Result<void, Error | SyntaxError[]>> {
   try {
     const stylesResult = await parseStyles(
       path.join(stylesDirectory, entry),
       stylesDirectory,
       tailwindConfig,
+      exitOnUnresolvedImport,
     );
 
     if (stylesResult.ok) {
