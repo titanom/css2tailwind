@@ -93,3 +93,22 @@ Create the styles directory.
 ```sh
 $ mkdir src/styles
 ```
+
+Create the style subdirectories.
+
+```sh
+$ mkdir src/styles/base
+$ mkdir src/styles/utilities
+$ mkdir src/styles/components
+```
+
+::: tip
+
+Each of the subdirectories corresponds to a `json` file in the output directory.  
+e.g.: `src/styles/base/ -> .styles/base.json`
+
+You can create as many subdirectories inside your styles directory as you want and give them arbitrary names. Just remember to update the imports from the output directory accordingly.
+
+If a directory does not include any files, git will not track it. To prevent this you can add an empty `.gitkeep` inside the directory.
+
+:::
