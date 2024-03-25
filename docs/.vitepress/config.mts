@@ -31,6 +31,7 @@ export default defineConfig({
           { text: 'Including Custom Styles', link: '/guide/including-custom-styles' },
           { text: 'CLI', link: '/guide/cli' },
           { text: 'Monorepo', link: '/guide/monorepo' },
+          { text: 'Troubleshooting', link: '/guide/troubleshooting' },
         ],
       },
     ],

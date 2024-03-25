@@ -24,7 +24,7 @@ import components from './.styles/components.json';
 
 import type { Config } from 'tailwindcss';
 
-export const plugin = plugin(
+export const plugin = _plugin(
   ({ addComponents, addUtilities, addBase }) => {
     addBase(base);
     addUtilities(utilities);
